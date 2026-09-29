@@ -1,0 +1,197 @@
+@model ParkEasy.Web.Models.ViewModels.PaymentSimulatorViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Payment Simulator";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Academic Demo Header Banner -->
+            <div class="alert alert-info border-info d-flex align-items-center p-3 mb-4 shadow-sm" role="alert">
+                <i class="bi bi-mortarboard-fill fs-2 me-3 text-info"></i>
+                <div>
+                    <strong class="d-block text-dark">Academic Demonstration — Payment Simulator</strong>
+                    <small class="text-muted">This module safely simulates real-time banking and payment gateway transactions for academic evaluation. No real financial transaction will occur.</small>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 p-md-5">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                    <div>
+                        <h3 class="fw-bold mb-0"><i class="bi bi-credit-card-2-front text-primary me-2"></i>Checkout Payment</h3>
+                        <small class="text-muted">Booking Reference: <strong class="font-monospace text-primary">@Model.BookingReference</strong></small>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted d-block">Amount Due</small>
+                        <h3 class="fw-bold text-success mb-0">৳@Model.Amount.ToString("F2")</h3>
+                    </div>
+                </div>
+
+                <form asp-action="Simulate" method="post" id="paymentForm">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="BookingId" />
+                    <input type="hidden" asp-for="BookingReference" />
+                    <input type="hidden" asp-for="Amount" />
+
+                    <!-- Payment Method Selector Tabs -->
+                    <h5 class="fw-bold mb-3">Select Payment Method</h5>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodBkash" value="@PaymentMethod.Bkash" checked />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodBkash">
+                                <img src="~/images/payments/bkash.png" alt="bKash" class="pay-logo" onerror="this.remove()" />
+                                <span class="small fw-bold" style="color:#e2136e;">bKash</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodNagad" value="@PaymentMethod.Nagad" />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodNagad">
+                                <img src="~/images/payments/nagad.png" alt="Nagad" class="pay-logo" onerror="this.remove()" />
+                                <span class="small fw-bold" style="color:#f6921e;">Nagad</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodRocket" value="@PaymentMethod.Rocket" />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodRocket">
+                                <img src="~/images/payments/rocket.png" alt="Rocket" class="pay-logo" onerror="this.remove()" />
+                                <span class="small fw-bold" style="color:#8c3494;">Rocket</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodBank" value="@PaymentMethod.BankTransfer" />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodBank">
+                                <i class="bi bi-bank me-1"></i>
+                                <span class="small fw-bold">Bank</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodCard" value="@PaymentMethod.CreditCard" />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodCard">
+                                <i class="bi bi-credit-card me-1"></i>
+                                <span class="small fw-bold">Card</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" class="btn-check" asp-for="PaymentMethod" id="methodCash" value="@PaymentMethod.CashOnArrival" />
+                            <label class="btn btn-outline-primary px-3 py-2 text-center" for="methodCash">
+                                <i class="bi bi-cash-stack me-1"></i>
+                                <span class="small fw-bold">Pay at Gate</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Banking Fields (bKash / Nagad / Rocket) -->
+                    <div id="mfsSection" class="p-3 bg-light rounded-3 mb-4">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-6">
+                                <label asp-for="WalletAccountNumber" class="form-label small fw-semibold"></label>
+                                <input asp-for="WalletAccountNumber" class="form-control font-monospace" placeholder="01XXXXXXXXX" />
+                                <span asp-validation-for="WalletAccountNumber" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted"><i class="bi bi-phone-fill text-success me-1"></i>You will receive a mock OTP prompt after submit (simulator only).</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bank Transfer Fields -->
+                    <div id="bankSection" class="p-3 bg-light rounded-3 mb-4 d-none">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-6">
+                                <label asp-for="BankName" class="form-label small fw-semibold"></label>
+                                <select asp-for="BankName" class="form-select">
+                                    @foreach (var bank in PaymentSimulatorViewModel.BangladeshBanks)
+                                    {
+                                        <option value="@bank">@bank</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="BankAccountNumber" class="form-label small fw-semibold"></label>
+                                <input asp-for="BankAccountNumber" class="form-control font-monospace" placeholder="Account number" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Details Fields -->
+                    <div id="cardSection" class="p-3 bg-light rounded-3 mb-4 d-none">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="CardHolderName" class="form-label small fw-semibold"></label>
+                                <input asp-for="CardHolderName" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="CardNumber" class="form-label small fw-semibold"></label>
+                                <input asp-for="CardNumber" class="form-control font-monospace" />
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label asp-for="ExpiryDate" class="form-label small fw-semibold"></label>
+                                <input asp-for="ExpiryDate" class="form-control" />
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label asp-for="Cvv" class="form-label small fw-semibold"></label>
+                                <input asp-for="Cvv" class="form-control" type="password" />
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <small class="text-muted"><i class="bi bi-shield-lock-fill text-success me-1"></i>256-Bit SSL Mock Encrypted</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Outcome Switcher -->
+                    <div class="card bg-warning bg-opacity-10 border-warning border-opacity-25 p-3 mb-4">
+                        <label class="form-label fw-bold text-dark mb-2"><i class="bi bi-sliders me-1"></i>Simulation Outcome (For Demonstration)</label>
+                        <div class="d-flex gap-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="SimulateSuccess" id="simSuccess" value="true" checked />
+                                <label class="form-check-label fw-bold text-success" for="simSuccess">
+                                    <i class="bi bi-check-circle-fill me-1"></i>Simulate Success (Approved)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="SimulateSuccess" id="simFailure" value="false" />
+                                <label class="form-check-label fw-bold text-danger" for="simFailure">
+                                    <i class="bi bi-x-circle-fill me-1"></i>Simulate Failure (Declined)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm">
+                            <i class="bi bi-check-lg me-2"></i>Process Simulated Payment (৳@Model.Amount.ToString("F2"))
+                        </button>
+                        <a asp-controller="Booking" asp-action="Details" asp-route-id="@Model.BookingId" class="btn btn-light text-muted">
+                            Cancel & Return
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const mfs = document.getElementById('mfsSection');
+            const bank = document.getElementById('bankSection');
+            const card = document.getElementById('cardSection');
+            const mfsVals = ['Bkash', 'Nagad', 'Rocket'];
+
+            function refresh() {
+                const checked = document.querySelector('input[name="PaymentMethod"]:checked');
+                const val = checked ? checked.value : 'Bkash';
+                const isMfs = mfsVals.includes(val);
+                mfs.classList.toggle('d-none', !isMfs);
+                bank.classList.toggle('d-none', val !== 'BankTransfer');
+                card.classList.toggle('d-none', val !== 'CreditCard');
+            }
+
+            document.querySelectorAll('input[name="PaymentMethod"]').forEach(r => r.addEventListener('change', refresh));
+            refresh();
+        })();
+    </script>
+}

@@ -1,0 +1,139 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Help & FAQ";
+}
+
+<div class="container py-5" style="max-width: 860px;">
+    <div class="text-center mb-5">
+        <span class="pe-pill mb-3"><span class="dot"></span>Help Center</span>
+        <h1 class="fw-bold mt-2">How can we help?</h1>
+        <p style="color: var(--pe-muted);">Everything you need to reserve, pay, park, and host with ParkEasy.</p>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="row g-3 mb-5">
+        <div class="col-md-4">
+            <a asp-controller="Parking" asp-action="Index" class="text-decoration-none">
+                <div class="pe-bento text-center">
+                    <div class="pe-chip"><i class="bi bi-search"></i></div>
+                    <h5>Find parking</h5>
+                    <p>Search live slots near you.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-controller="Booking" asp-action="History" class="text-decoration-none">
+                <div class="pe-bento text-center">
+                    <div class="pe-chip"><i class="bi bi-journal-text"></i></div>
+                    <h5>My bookings</h5>
+                    <p>Passes, payments, history.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-controller="Home" asp-action="Contact" class="text-decoration-none">
+                <div class="pe-bento text-center">
+                    <div class="pe-chip"><i class="bi bi-envelope"></i></div>
+                    <h5>Contact us</h5>
+                    <p>Send a support message.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <h4 class="fw-bold mb-3">Frequently asked questions</h4>
+    <div class="accordion pe-accordion" id="helpFaq">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">How do I book a parking slot?</button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Go to <strong>Find Parking</strong>, open a location, pick a date and start time, click a green (available) slot, then <strong>Proceed to Reserve</strong>. Confirm your vehicle plate and duration on the next page — your slot is reserved instantly.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Do I have to pay before parking?</button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">No. Your <strong>digital QR pass unlocks immediately</strong> after booking. You can complete payment anytime from the booking details page using the payment simulator.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Which payment methods are supported?</button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body"><strong>bKash, Nagad, Rocket</strong>, <strong>bank transfer</strong> (UCB, City Bank, Sonali Bank, Dutch-Bangla, BRAC, Eastern, Pubali, Islami, Janata, Agrani), cards, and pay-at-gate. This is a <strong>simulator</strong> — no real money moves.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Where is my QR entry pass?</button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Right after booking, tap <strong>View / Print Digital QR Pass</strong>. Later, find it under <strong>My Bookings → Details → Open Digital Pass</strong>. Show the QR at the gate scanner; you can also print it as PDF.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">What do the slot colors mean?</button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body"><strong>Green</strong> = available, <strong>blue</strong> = your selection, <strong>red</strong> = occupied for your time window, <strong>amber</strong> = under maintenance. Availability is checked live for the date and hours you pick.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">How do check-in and checkout work?</button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Open the booking details and use <strong>Simulate Check-In</strong> when you arrive (activates the booking) and <strong>Complete Booking</strong> when you leave. Owners can also do this for you.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">How do I cancel or get a refund?</button>
+            </h2>
+            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Open the booking → <strong>Cancel Booking</strong> with a reason. Paid bookings automatically generate a simulated refund record you can track on the booking page.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">I own a parking space. How do I list it?</button>
+            </h2>
+            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Register an account, then open the <strong>Owner Portal → Add New Space</strong>. Three slots are auto-generated; manage pricing, requests, occupancy, and earnings from the owner dashboard.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">Which cities are covered?</button>
+            </h2>
+            <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Dhaka, Chattogram, Sylhet, Khulna, Rajshahi, Barishal, and Rangpur — with live maps, per-city filtering, and distance search.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">Are there demo accounts to try roles?</button>
+            </h2>
+            <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#helpFaq">
+                <div class="accordion-body">Yes — use the <strong>View Demo Accounts</strong> button in the footer: Admin, Owner, and Driver logins with one click.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Still stuck -->
+    <div class="pe-cta text-center p-4 p-md-5 mt-5">
+        <div class="position-relative" style="z-index: 2;">
+            <h4 class="fw-bold mb-2">Still stuck?</h4>
+            <p class="mb-3" style="color: var(--pe-muted);">Send us a message and support will get back to you.</p>
+            <a asp-controller="Home" asp-action="Contact" class="btn btn-primary rounded-pill px-4 fw-bold">
+                <i class="bi bi-envelope me-1"></i>Contact Support
+            </a>
+        </div>
+    </div>
+</div>

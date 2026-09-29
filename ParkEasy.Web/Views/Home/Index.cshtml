@@ -1,0 +1,257 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Home - Smart Parking Booking";
+    var featuredSpaces = ViewBag.FeaturedSpaces as List<ParkingSpaceCardViewModel> ?? new List<ParkingSpaceCardViewModel>();
+    var cities = ViewBag.Cities as List<string> ?? new List<string>();
+}
+
+<div class="container hero-shell">
+    <!-- Hero Panel -->
+    <section class="hero-section text-center">
+        <div class="container position-relative" style="z-index: 2;">
+            <span class="pe-pill mb-4"><span class="dot"></span>Smarter Parking Network</span>
+            <h1 class="mb-3">Park smarter by design.<br />Reserved in seconds.</h1>
+            <p class="sub mb-4 mx-auto">
+                Live slot availability, instant booking, and a scannable QR pass.
+                Find your spot, lock it in, and drive straight there.
+            </p>
+
+            <div class="d-flex gap-2 justify-content-center flex-wrap mb-5">
+                <a asp-controller="Parking" asp-action="Index" class="btn btn-glass px-4 py-2 fw-semibold">
+                    Find a Slot <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <a href="#how-it-works" class="btn btn-glass px-4 py-2 fw-semibold" style="opacity: 0.85;">
+                    How it works
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="row justify-content-center text-start">
+                <div class="col-lg-10">
+                    <div class="hero-search-box">
+                        <form asp-controller="Parking" asp-action="Index" method="get" class="row g-2 align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label small fw-bold mb-1"><i class="bi bi-search me-1"></i>Location / Space Name</label>
+                                <input type="text" name="Query" class="form-control" placeholder="e.g. Grand Central, Downtown..." />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold mb-1"><i class="bi bi-building me-1"></i>City</label>
+                                <select name="City" class="form-select">
+                                    <option value="">All Cities</option>
+                                    @foreach (var city in cities)
+                                    {
+                                        <option value="@city">@city</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold mb-1"><i class="bi bi-car-front me-1"></i>Vehicle</label>
+                                <select name="VehicleType" class="form-select">
+                                    <option value="">Any</option>
+                                    <option value="Car">Car</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="ElectricVehicle">Electric (EV)</option>
+                                    <option value="Motorcycle">Motorcycle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-grid">
+                                <button type="submit" class="btn btn-primary fw-bold">
+                                    <i class="bi bi-search me-1"></i>Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trusted strip -->
+            <div class="trusted-strip">
+                <div class="t-label mb-3">Serving drivers across the city</div>
+                <div class="t-logos">
+                    <span>DOWNTOWN</span>
+                    <span>AIRPORT</span>
+                    <span>MIDTOWN</span>
+                    <span>HARBOUR</span>
+                    <span>OLD TOWN</span>
+                    <span>UNIVERSITY</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Mission -->
+<div class="container text-center py-5">
+    <div class="pe-icon-orb mb-4"><i class="bi bi-p-square"></i></div>
+    <p class="pe-mission mx-auto mb-4">
+        Our network of verified hosts, live slot tracking, and instant
+        digital passes takes the guesswork out of parking — across
+        downtown, airports, and event venues.
+    </p>
+    <a asp-controller="Home" asp-action="About" class="btn btn-glass px-4 py-2 fw-semibold">
+        Learn More <i class="bi bi-arrow-right ms-1"></i>
+    </a>
+</div>
+
+<!-- Stats -->
+<div class="container mb-5">
+    <div class="pe-stats row g-0 text-center rounded-4 overflow-hidden">
+        <div class="col-6 col-md-3 pe-stat">
+            <div class="k">Live Inventory</div>
+            <div class="v">100+</div>
+        </div>
+        <div class="col-6 col-md-3 pe-stat">
+            <div class="k">Booking Success</div>
+            <div class="v">99.8%</div>
+        </div>
+        <div class="col-6 col-md-3 pe-stat">
+            <div class="k">Availability Sync</div>
+            <div class="v">Real-time</div>
+        </div>
+        <div class="col-6 col-md-3 pe-stat">
+            <div class="k">Gate Check-in</div>
+            <div class="v">QR Pass</div>
+        </div>
+    </div>
+</div>
+
+<!-- How it works / bento -->
+<section id="how-it-works" class="container mb-5">
+    <div class="text-center mb-4">
+        <span class="pe-pill mb-3"><span class="dot"></span>How it works</span>
+        <h2 class="fw-bold mt-2">Where parking meets clarity</h2>
+        <p class="mx-auto" style="color: var(--pe-muted); max-width: 560px;">Three steps between you and a guaranteed spot. No circling the block.</p>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-geo-alt"></i></div>
+                <h5>Search &amp; select</h5>
+                <p>Filter by destination, price, and vehicle type. Inspect the live slot layout before you commit.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-credit-card"></i></div>
+                <h5>Book &amp; pay</h5>
+                <p>Concurrency protection holds your slot while you check out through the secure payment flow.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-qr-code-scan"></i></div>
+                <h5>Scan &amp; park</h5>
+                <p>Get an instant digital pass with QR code. Scan at the gate and head straight to your slot.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-lightning-charge"></i></div>
+                <h5>EV-ready slots</h5>
+                <p>Filter chargers and covered bays. Every amenity is verified by the space host.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-broadcast"></i></div>
+                <h5>Live occupancy</h5>
+                <p>Slot status syncs in real time, so the availability you see is the availability you get.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pe-bento">
+                <div class="pe-chip"><i class="bi bi-building-add"></i></div>
+                <h5>Owner dashboard</h5>
+                <p>Hosts track earnings, occupancy, and booking requests from one calm control panel.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Parking Locations -->
+<section class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <span class="pe-pill mb-2"><span class="dot"></span>Top rated</span>
+            <h2 class="fw-bold mb-1 mt-2">Featured parking spaces</h2>
+            <p class="mb-0" style="color: var(--pe-muted);">Popular verified facilities with live availability</p>
+        </div>
+        <a asp-controller="Parking" asp-action="Index" class="btn btn-glass btn-sm fw-semibold">
+            View All Spaces <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @if (featuredSpaces.Any())
+        {
+            @foreach (var space in featuredSpaces)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 overflow-hidden">
+                        <div class="position-relative" style="height: 190px; background-color: #0c0c0e;">
+                            @if (!string.IsNullOrEmpty(space.ImageUrl))
+                            {
+                                <img src="@space.ImageUrl" class="w-100 h-100 object-fit-cover" alt="@space.Name" style="opacity: 0.88;" onerror="this.src='https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80'" />
+                            }
+                            else
+                            {
+                                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" class="w-100 h-100 object-fit-cover" style="opacity: 0.88;" alt="Parking" />
+                            }
+                            <span class="position-absolute top-0 start-0 m-3 badge bg-secondary rounded-pill px-3 py-2">
+                                <i class="bi bi-clock me-1"></i>@space.OperatingHours
+                            </span>
+                            <span class="position-absolute top-0 end-0 m-3 badge bg-primary rounded-pill px-3 py-2 fw-bold">
+                                ৳@space.BasePricePerHour.ToString("F2")/hr
+                            </span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold mb-1 text-truncate" title="@space.Name">@space.Name</h5>
+                            <p class="card-text small mb-2" style="color: var(--pe-muted);"><i class="bi bi-geo-alt-fill text-danger me-1"></i>@space.Address, @space.City</p>
+
+                            <div class="d-flex flex-wrap gap-1 mb-3">
+                                @if (space.HasCCTV) { <span class="badge bg-secondary"><i class="bi bi-camera-video me-1"></i>CCTV</span> }
+                                @if (space.HasEVCharging) { <span class="badge bg-secondary"><i class="bi bi-lightning-charge-fill me-1"></i>EV</span> }
+                                @if (space.HasCoveredParking) { <span class="badge bg-secondary"><i class="bi bi-umbrella-fill me-1"></i>Covered</span> }
+                                @if (space.HasDisabledAccess) { <span class="badge bg-secondary"><i class="bi bi-person-wheelchair me-1"></i>Accessible</span> }
+                            </div>
+
+                            <div class="mt-auto pt-2 d-flex justify-content-between align-items-center" style="border-top: 1px solid var(--pe-border-soft);">
+                                <div>
+                                    <span class="badge @(space.AvailableSlots > 0 ? "bg-success" : "bg-danger") px-2 py-1">
+                                        @(space.AvailableSlots > 0 ? $"{space.AvailableSlots} of {space.TotalSlots} free" : "Fully occupied")
+                                    </span>
+                                </div>
+                                <a asp-controller="Parking" asp-action="Details" asp-route-id="@space.Id" class="btn btn-sm btn-primary rounded-pill px-3 fw-semibold">
+                                    Reserve <i class="bi bi-chevron-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <p style="color: var(--pe-muted);">No featured spaces found. Visit the search page to explore all available spots.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Call to action -->
+<div class="container mb-5">
+    <div class="pe-cta text-white p-4 p-md-5 text-center">
+        <div class="position-relative" style="z-index: 2;">
+            <span class="pe-pill mb-3"><span class="dot"></span>For owners</span>
+            <h2 class="fw-bold mb-3 mt-2">Own a garage or an empty driveway?</h2>
+            <p class="mb-4 mx-auto" style="color: var(--pe-muted); max-width: 620px;">
+                List your space, set slot pricing, and watch bookings roll in with live occupancy and earnings tracking.
+            </p>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold">
+                <i class="bi bi-building-add me-2"></i>Register as Space Owner
+            </a>
+        </div>
+    </div>
+</div>

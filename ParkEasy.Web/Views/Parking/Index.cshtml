@@ -1,0 +1,249 @@
+@model ParkEasy.Web.Models.ViewModels.ParkingSearchViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Find Parking Spaces";
+}
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-search text-primary me-2"></i>Find Parking Spaces</h2>
+            <p class="text-muted mb-0">Showing <strong>@Model.TotalCount</strong> available parking locations</p>
+        </div>
+        <div class="d-flex gap-2 mt-3 mt-md-0">
+            <button class="btn btn-outline-secondary btn-sm" id="toggleViewBtn" onclick="toggleView()">
+                <i class="bi bi-map me-1"></i><span id="viewBtnText">Map View</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm p-3 sticky-top" style="top: 80px; z-index: 10;">
+                <h5 class="fw-bold mb-3"><i class="bi bi-funnel me-1 text-primary"></i>Filters</h5>
+                <form method="get" asp-action="Index" id="filterForm">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Keywords / Address</label>
+                        <input type="text" asp-for="Query" class="form-control form-control-sm" placeholder="Search by name, street..." />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">City</label>
+                        <select asp-for="City" class="form-select form-select-sm">
+                            <option value="">All Cities</option>
+                            @foreach (var city in Model.AvailableCities)
+                            {
+                                <option value="@city">@city</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Vehicle Type</label>
+                        <select asp-for="VehicleType" class="form-select form-select-sm" asp-items="Html.GetEnumSelectList<VehicleType>()">
+                            <option value="">Any Vehicle</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Max Price (৳/hr): <span id="priceVal" class="text-primary fw-bold">@(Model.MaxPrice.HasValue ? $"৳{Model.MaxPrice:F2}" : "Any")</span></label>
+                        <input type="range" class="form-range" min="0" max="1000" step="10" id="priceRange" value="@(Model.MaxPrice ?? 1000)" oninput="updatePrice(this.value)" />
+                        <input type="hidden" asp-for="MaxPrice" id="maxPriceInput" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Sort By</label>
+                        <select asp-for="SortBy" class="form-select form-select-sm">
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="availability">Available Slots: High to Low</option>
+                        </select>
+                    </div>
+
+                    <hr class="my-3" />
+
+                    <h6 class="small fw-bold text-muted text-uppercase mb-2">Amenities</h6>
+                    <div class="form-check form-check-sm mb-1">
+                        <input class="form-check-input" type="checkbox" asp-for="HasCCTV" />
+                        <label class="form-check-label small" asp-for="HasCCTV">CCTV Surveillance</label>
+                    </div>
+                    <div class="form-check form-check-sm mb-1">
+                        <input class="form-check-input" type="checkbox" asp-for="HasEVCharging" />
+                        <label class="form-check-label small" asp-for="HasEVCharging">EV Fast Charging</label>
+                    </div>
+                    <div class="form-check form-check-sm mb-1">
+                        <input class="form-check-input" type="checkbox" asp-for="HasCoveredParking" />
+                        <label class="form-check-label small" asp-for="HasCoveredParking">Covered / Indoor</label>
+                    </div>
+                    <div class="form-check form-check-sm mb-1">
+                        <input class="form-check-input" type="checkbox" asp-for="HasDisabledAccess" />
+                        <label class="form-check-label small" asp-for="HasDisabledAccess">Accessible Parking</label>
+                    </div>
+                    <div class="form-check form-check-sm mb-3">
+                        <input class="form-check-input" type="checkbox" asp-for="HasValet" />
+                        <label class="form-check-label small" asp-for="HasValet">Valet Service</label>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold">Apply Filters</button>
+                        <a asp-action="Index" class="btn btn-light btn-sm text-muted">Reset Filters</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-lg-9">
+            <!-- Map Container (Hidden by default or toggled) -->
+            <div id="mapViewContainer" class="card border-0 shadow-sm p-3 mb-4 d-none">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small fw-bold text-muted"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Interactive Map View</span>
+                    <small class="text-muted">Click markers for details</small>
+                </div>
+                <div id="map"></div>
+            </div>
+
+            <!-- Grid Results -->
+            <div id="gridResults" class="row g-3">
+                @if (Model.Results.Any())
+                {
+                    @foreach (var space in Model.Results)
+                    {
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                                <div class="position-relative" style="height: 180px; background-color: #cbd5e1;">
+                                    @if (!string.IsNullOrEmpty(space.ImageUrl))
+                                    {
+                                        <img src="@space.ImageUrl" class="w-100 h-100 object-fit-cover" alt="@space.Name" onerror="this.src='https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80'" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" class="w-100 h-100 object-fit-cover" alt="Parking" />
+                                    }
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-primary px-2 py-1 fw-bold fs-6">
+                                        ৳@space.BasePricePerHour.ToString("F2")/hr
+                                    </span>
+                                    <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark bg-opacity-75">
+                                        <i class="bi bi-clock me-1"></i>@space.OperatingHours
+                                    </span>
+                                </div>
+                                <div class="card-body d-flex flex-column p-3">
+                                    <h5 class="fw-bold mb-1 text-truncate" title="@space.Name">@space.Name</h5>
+                                    <p class="text-muted small mb-2"><i class="bi bi-geo-alt text-danger me-1"></i>@space.Address, @space.City</p>
+
+                                    <div class="d-flex flex-wrap gap-1 mb-3">
+                                        @if (space.HasCCTV) { <span class="badge bg-light text-dark border small">CCTV</span> }
+                                        @if (space.HasEVCharging) { <span class="badge bg-light text-success border small"><i class="bi bi-lightning-charge-fill me-1"></i>EV</span> }
+                                        @if (space.HasCoveredParking) { <span class="badge bg-light text-primary border small">Covered</span> }
+                                        @if (space.HasDisabledAccess) { <span class="badge bg-light text-info border small">Accessible</span> }
+                                    </div>
+
+                                    <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="badge @(space.AvailableSlots > 0 ? "bg-success" : "bg-danger")">
+                                                @(space.AvailableSlots > 0 ? $"{space.AvailableSlots} of {space.TotalSlots} Slots Free" : "Occupied")
+                                            </span>
+                                        </div>
+                                        <a asp-action="Details" asp-route-id="@space.Id" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
+                                            View Slots <i class="bi bi-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5">
+                        <div class="card border-0 p-5 bg-white shadow-sm">
+                            <i class="bi bi-geo-alt text-muted display-3 mb-3"></i>
+                            <h4 class="fw-bold">No parking spaces matched your filters</h4>
+                            <p class="text-muted">Try changing your search query, adjusting the max price slider, or selecting all cities.</p>
+                            <div class="mt-2">
+                                <a asp-action="Index" class="btn btn-primary rounded-pill px-4">Reset All Filters</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updatePrice(val) {
+            document.getElementById('priceVal').innerText = '৳' + val + '.00';
+            document.getElementById('maxPriceInput').value = val;
+        }
+
+        let map = null;
+        let mapInitialized = false;
+
+        function toggleView() {
+            const mapContainer = document.getElementById('mapViewContainer');
+            const btnText = document.getElementById('viewBtnText');
+
+            if (mapContainer.classList.contains('d-none')) {
+                mapContainer.classList.remove('d-none');
+                btnText.innerText = "Hide Map";
+                if (!mapInitialized) {
+                    initMap();
+                }
+            } else {
+                mapContainer.classList.add('d-none');
+                btnText.innerText = "Map View";
+            }
+        }
+
+        const spacesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Results.Select(r => new {
+            id = r.Id,
+            name = r.Name,
+            address = r.Address,
+            city = r.City,
+            lat = (double)r.Latitude,
+            lng = (double)r.Longitude,
+            price = r.BasePricePerHour,
+            available = r.AvailableSlots,
+            total = r.TotalSlots
+        })));
+
+        function initMap() {
+            mapInitialized = true;
+            const defaultLat = spacesData.length > 0 ? spacesData[0].lat : 40.7128;
+            const defaultLng = spacesData.length > 0 ? spacesData[0].lng : -74.0060;
+
+            map = L.map('map').setView([defaultLat, defaultLng], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const markers = [];
+            spacesData.forEach(s => {
+                const marker = L.marker([s.lat, s.lng]).addTo(map);
+                const popupContent = `
+                    <div style="min-width: 180px;">
+                        <h6 style="font-weight: bold; margin-bottom: 4px;">${s.name}</h6>
+                        <p style="font-size: 0.8rem; color: #666; margin-bottom: 6px;">${s.address}, ${s.city}</p>
+                        <div style="margin-bottom: 6px;">
+                            <span class="badge bg-primary">৳${s.price.toFixed(2)}/hr</span>
+                            <span class="badge ${s.available > 0 ? 'bg-success' : 'bg-danger'}">${s.available}/${s.total} Free</span>
+                        </div>
+                        <a href="/Parking/Details/${s.id}" class="btn btn-sm btn-primary w-100 text-white" style="font-size: 0.75rem;">View & Book</a>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+                markers.push([s.lat, s.lng]);
+            });
+
+            if (markers.length > 1) {
+                const bounds = L.latLngBounds(markers);
+                map.fitBounds(bounds, { padding: [30, 30] });
+            }
+        }
+    </script>
+}

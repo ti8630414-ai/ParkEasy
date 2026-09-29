@@ -1,0 +1,218 @@
+@model ParkEasy.Web.Models.ViewModels.ParkingSpaceCreateEditViewModel
+@{
+    ViewData["Title"] = "Add New Parking Space";
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-action="Spaces">My Spaces</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Parking Space</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                    <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                        <i class="bi bi-building-add fs-3"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">Add New Parking Space</h3>
+                        <small class="text-muted">Enter location details, amenities, hourly rates, and initial slot configuration</small>
+                    </div>
+                </div>
+
+                <form asp-action="CreateSpace" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-info-circle text-primary me-2"></i>Basic Details</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-8">
+                            <label asp-for="Name" class="form-label small fw-semibold"></label>
+                            <input asp-for="Name" class="form-control" placeholder="e.g. Metropolis Central Garage" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="BasePricePerHour" class="form-label small fw-semibold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="BasePricePerHour" class="form-control" type="number" step="0.5" placeholder="8.50" />
+                            </div>
+                            <span asp-validation-for="BasePricePerHour" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label small fw-semibold"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Brief description of the facility, entry instructions, security..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="ImageUrl" class="form-label small fw-semibold"></label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://images.unsplash.com/..." />
+                            <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Location & Map Coordinates</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Address" class="form-label small fw-semibold"></label>
+                            <input asp-for="Address" class="form-control" placeholder="e.g. 100 Main Street" />
+                            <span asp-validation-for="Address" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="City" class="form-label small fw-semibold"></label>
+                            <input asp-for="City" class="form-control" placeholder="e.g. New York" />
+                            <span asp-validation-for="City" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="PostalCode" class="form-label small fw-semibold"></label>
+                            <input asp-for="PostalCode" class="form-control" placeholder="10001" />
+                            <span asp-validation-for="PostalCode" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Map Coordinate Picker -->
+                    <div class="card bg-light border p-3 mb-4">
+                        <label class="form-label small fw-bold text-dark mb-1"><i class="bi bi-pin-map-fill text-primary me-1"></i>Pinpoint On Map (Click map to position pin)</label>
+                        <small class="text-muted d-block mb-2">Click anywhere on the interactive map below or drag the marker to set precise coordinates.</small>
+                        
+                        <div id="pickerMap" style="height: 280px; border-radius: 8px;" class="mb-3"></div>
+
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label asp-for="Latitude" class="form-label small fw-semibold"></label>
+                                <input asp-for="Latitude" class="form-control font-monospace" id="latInput" value="40.712800" />
+                                <span asp-validation-for="Latitude" class="text-danger small"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="Longitude" class="form-label small fw-semibold"></label>
+                                <input asp-for="Longitude" class="form-control font-monospace" id="lngInput" value="-74.006000" />
+                                <span asp-validation-for="Longitude" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-clock-history text-primary me-2"></i>Operating Hours</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input asp-for="Is24Hours" class="form-check-input" type="checkbox" id="switch24h" checked onchange="toggleHours(this.checked)" />
+                                <label class="form-check-label fw-semibold" for="switch24h">Open 24 Hours / 7 Days a Week</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-none" id="openTimeCol">
+                            <label asp-for="OpeningTime" class="form-label small fw-semibold"></label>
+                            <input asp-for="OpeningTime" class="form-control" type="time" value="06:00" />
+                        </div>
+                        <div class="col-md-6 d-none" id="closeTimeCol">
+                            <label asp-for="ClosingTime" class="form-label small fw-semibold"></label>
+                            <input asp-for="ClosingTime" class="form-control" type="time" value="23:00" />
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-shield-check text-primary me-2"></i>Amenities & Security</h5>
+                    <div class="row g-2 mb-4">
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasCCTV" class="form-check-input" checked />
+                                <label asp-for="HasCCTV" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasEVCharging" class="form-check-input" />
+                                <label asp-for="HasEVCharging" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasCoveredParking" class="form-check-input" />
+                                <label asp-for="HasCoveredParking" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasDisabledAccess" class="form-check-input" />
+                                <label asp-for="HasDisabledAccess" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasValet" class="form-check-input" />
+                                <label asp-for="HasValet" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="HasSecurityGuard" class="form-check-input" checked />
+                                <label asp-for="HasSecurityGuard" class="form-check-label small"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-grid-3x3 text-primary me-2"></i>Automatic Initial Slots Generation</h5>
+                    <div class="row g-3 mb-4 p-3 bg-light rounded-3">
+                        <div class="col-md-6">
+                            <label asp-for="AutoGenerateSlotsCount" class="form-label small fw-semibold"></label>
+                            <input asp-for="AutoGenerateSlotsCount" class="form-control" type="number" min="0" max="100" />
+                            <span class="text-muted small">System will automatically create numbered slots (e.g. P-01, P-02...).</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="DefaultZone" class="form-label small fw-semibold"></label>
+                            <input asp-for="DefaultZone" class="form-control" placeholder="Ground Level" />
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold">
+                            <i class="bi bi-check-circle-fill me-2"></i>Create Parking Space & Generate Slots
+                        </button>
+                        <a asp-action="Spaces" class="btn btn-light text-muted">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function toggleHours(is24) {
+            document.getElementById('openTimeCol').classList.toggle('d-none', is24);
+            document.getElementById('closeTimeCol').classList.toggle('d-none', is24);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let lat = parseFloat(document.getElementById('latInput').value) || 40.7128;
+            let lng = parseFloat(document.getElementById('lngInput').value) || -74.0060;
+
+            const map = L.map('pickerMap').setView([lat, lng], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+            function updateInputs(newLat, newLng) {
+                document.getElementById('latInput').value = newLat.toFixed(6);
+                document.getElementById('lngInput').value = newLng.toFixed(6);
+            }
+
+            marker.on('dragend', function (e) {
+                const pos = e.target.getLatLng();
+                updateInputs(pos.lat, pos.lng);
+            });
+
+            map.on('click', function (e) {
+                marker.setLatLng(e.latlng);
+                updateInputs(e.latlng.lat, e.latlng.lng);
+            });
+        });
+    </script>
+}

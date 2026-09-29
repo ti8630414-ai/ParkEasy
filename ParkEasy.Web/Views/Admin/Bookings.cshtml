@@ -1,0 +1,75 @@
+@model List<ParkEasy.Web.Models.ViewModels.BookingSummaryViewModel>
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Global Bookings Ledger";
+    var selectedStatus = ViewBag.SelectedStatus as string;
+}
+
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-journal-bookmark-fill text-danger me-2"></i>Global Reservations Ledger</h2>
+            <p class="text-muted mb-0">Platform-wide booking audit records</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Bookings" class="btn btn-sm @(string.IsNullOrEmpty(selectedStatus) ? "btn-dark" : "btn-outline-secondary")">All</a>
+            <a asp-action="Bookings" asp-route-status="Active" class="btn btn-sm @(selectedStatus == "Active" ? "btn-success" : "btn-outline-success")">Active</a>
+            <a asp-action="Bookings" asp-route-status="Confirmed" class="btn btn-sm @(selectedStatus == "Confirmed" ? "btn-primary" : "btn-outline-primary")">Confirmed</a>
+            <a asp-action="Bookings" asp-route-status="Completed" class="btn btn-sm @(selectedStatus == "Completed" ? "btn-secondary" : "btn-outline-secondary")">Completed</a>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Booking Ref</th>
+                        <th>Facility</th>
+                        <th>Slot</th>
+                        <th>Vehicle</th>
+                        <th>Time Window</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="font-monospace fw-bold text-primary">@b.BookingReference</span>
+                            </td>
+                            <td><strong>@b.ParkingName</strong></td>
+                            <td><span class="badge bg-light text-dark border">@b.SlotNumber</span></td>
+                            <td><span class="font-monospace">@b.VehiclePlateNumber</span></td>
+                            <td class="small">
+                                <div>@b.StartTime.ToString("MMM dd, HH:mm")</div>
+                                <div class="text-muted">@b.DurationHours hrs</div>
+                            </td>
+                            <td class="fw-bold text-success">৳@b.TotalAmount.ToString("F2")</td>
+                            <td>
+                                @if (b.Status == BookingStatus.Active) { <span class="badge bg-success">Active</span> }
+                                else if (b.Status == BookingStatus.Confirmed) { <span class="badge bg-primary">Confirmed</span> }
+                                else if (b.Status == BookingStatus.Requested) { <span class="badge bg-warning text-dark">Pending</span> }
+                                else if (b.Status == BookingStatus.Completed) { <span class="badge bg-secondary">Completed</span> }
+                                else { <span class="badge bg-danger">@b.Status</span> }
+                            </td>
+                            <td>
+                                @if (b.PaymentStatus == PaymentStatus.Paid) { <span class="badge bg-success"><i class="bi bi-check me-1"></i>Paid</span> }
+                                else { <span class="badge bg-warning text-dark">Pending</span> }
+                            </td>
+                            <td class="text-end">
+                                <a asp-controller="Booking" asp-action="Details" asp-route-id="@b.BookingId" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

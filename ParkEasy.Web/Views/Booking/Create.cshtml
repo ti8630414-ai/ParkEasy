@@ -1,0 +1,138 @@
+@model ParkEasy.Web.Models.ViewModels.CreateBookingViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Confirm Reservation & Checkout";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                        <i class="bi bi-shield-check fs-3"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">Confirm Parking Reservation</h3>
+                        <small class="text-muted">Review booking information and vehicle details before proceeding</small>
+                    </div>
+                </div>
+
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ParkingSpaceId" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <!-- Space & Slot Summary Card -->
+                    <div class="card bg-light border-0 p-3 mb-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Parking Facility</small>
+                                <h5 class="fw-bold text-dark mb-1">@Model.ParkingSpaceName</h5>
+                                <p class="small text-muted mb-0"><i class="bi bi-geo-alt text-danger me-1"></i>@Model.ParkingSpaceAddress, @Model.ParkingSpaceCity</p>
+                            </div>
+                            <div class="col-md-5">
+                                <label asp-for="ParkingSlotId" class="form-label small fw-bold">Select Parking Slot</label>
+                                <select asp-for="ParkingSlotId" class="form-select fw-bold" id="slotSelector" onchange="updateSelectedSlot(this)">
+                                    @foreach (var slot in Model.AvailableSlots.Where(s => s.IsAvailableForRequestedTime))
+                                    {
+                                        <option value="@slot.Id" data-price="@slot.PricePerHour" data-zone="@slot.FloorOrZone" data-num="@slot.SlotNumber">
+                                            Slot @slot.SlotNumber (@slot.FloorOrZone) - ৳@slot.PricePerHour.ToString("F2")/hr
+                                        </option>
+                                    }
+                                </select>
+                                <span asp-validation-for="ParkingSlotId" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-car-front text-primary me-2"></i>Vehicle Information</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="VehiclePlateNumber" class="form-label fw-semibold small"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-card-text"></i></span>
+                                <input asp-for="VehiclePlateNumber" class="form-control" placeholder="e.g. NYC-7821" />
+                            </div>
+                            <span asp-validation-for="VehiclePlateNumber" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="VehicleType" class="form-label fw-semibold small"></label>
+                            <select asp-for="VehicleType" class="form-select" asp-items="Html.GetEnumSelectList<VehicleType>()"></select>
+                            <span asp-validation-for="VehicleType" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-clock-history text-primary me-2"></i>Schedule & Duration</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label asp-for="BookingDate" class="form-label fw-semibold small"></label>
+                            <input asp-for="BookingDate" class="form-control" type="date" min="@Model.BookingDate.ToString("yyyy-MM-dd")" id="createDate" />
+                            <span asp-validation-for="BookingDate" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="StartTime" class="form-label fw-semibold small"></label>
+                            <input asp-for="StartTime" class="form-control" type="time" id="createTime" />
+                            <span asp-validation-for="StartTime" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="DurationHours" class="form-label fw-semibold small"></label>
+                            <input asp-for="DurationHours" class="form-control" type="number" min="1" max="48" id="createDuration" oninput="calculateBookingTotal()" />
+                            <span asp-validation-for="DurationHours" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Cost Summary Card -->
+                    <div class="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted small">Hourly Slot Rate:</span>
+                            <strong id="rateLabel">৳@Model.PricePerHour.ToString("F2")</strong>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted small">Total Duration:</span>
+                            <span id="durationLabel">@Model.DurationHours hr(s)</span>
+                        </div>
+                        <hr class="my-2" />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong class="fs-5 text-dark">Total Booking Amount:</strong>
+                            <strong class="fs-4 text-primary" id="totalLabel">৳@Model.TotalAmount.ToString("F2")</strong>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                            <i class="bi bi-lock-fill me-2"></i>Lock Slot & Proceed to Payment
+                        </button>
+                        <a asp-controller="Parking" asp-action="Details" asp-route-id="@Model.ParkingSpaceId" class="btn btn-light text-muted">
+                            Cancel & Choose Another Space
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function updateSelectedSlot(selectEl) {
+            calculateBookingTotal();
+        }
+
+        function calculateBookingTotal() {
+            const selectEl = document.getElementById('slotSelector');
+            const selectedOpt = selectEl.options[selectEl.selectedIndex];
+            const rate = selectedOpt ? parseFloat(selectedOpt.dataset.price) : 0;
+            const duration = parseInt(document.getElementById('createDuration').value) || 1;
+
+            const total = rate * duration;
+            document.getElementById('rateLabel').innerText = '৳' + rate.toFixed(2) + ' / hr';
+            document.getElementById('durationLabel').innerText = duration + ' hr(s)';
+            document.getElementById('totalLabel').innerText = '৳' + total.toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', calculateBookingTotal);
+    </script>
+}

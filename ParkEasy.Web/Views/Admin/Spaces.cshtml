@@ -1,0 +1,67 @@
+@model List<ParkEasy.Web.Models.ViewModels.ParkingSpaceCardViewModel>
+@{
+    ViewData["Title"] = "All System Parking Spaces";
+}
+
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-p-square-fill text-danger me-2"></i>Global Parking Spaces Oversight</h2>
+            <p class="text-muted mb-0">Total of <strong>@Model.Count</strong> registered facilities in system</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Facility Name</th>
+                        <th>Location</th>
+                        <th>Rate</th>
+                        <th>Slots Count</th>
+                        <th>Operating Hours</th>
+                        <th>Amenities</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@s.Name</strong>
+                            </td>
+                            <td>
+                                <div>@s.Address</div>
+                                <small class="text-muted">@s.City (Lat: @s.Latitude, Lng: @s.Longitude)</small>
+                            </td>
+                            <td class="fw-bold text-success">৳@s.BasePricePerHour.ToString("F2")/hr</td>
+                            <td>
+                                <span class="badge @(s.AvailableSlots > 0 ? "bg-success" : "bg-danger")">
+                                    @s.AvailableSlots / @s.TotalSlots Free
+                                </span>
+                            </td>
+                            <td><small class="badge bg-light text-dark border">@s.OperatingHours</small></td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if (s.HasCCTV) { <span class="badge bg-light text-dark border small" title="CCTV">CCTV</span> }
+                                    @if (s.HasEVCharging) { <span class="badge bg-light text-success border small" title="EV Charging">EV</span> }
+                                    @if (s.HasCoveredParking) { <span class="badge bg-light text-primary border small" title="Covered">Covered</span> }
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <a asp-controller="Parking" asp-action="Details" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary" target="_blank">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                                <a asp-controller="Owner" asp-action="Slots" asp-route-spaceId="@s.Id" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-grid"></i> Slots
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

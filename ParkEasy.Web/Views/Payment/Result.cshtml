@@ -1,0 +1,85 @@
+@model ParkEasy.Web.Models.ViewModels.PaymentResultViewModel
+@using ParkEasy.Web.Helpers
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = Model.IsSuccess ? "Payment Successful" : "Payment Declined";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg text-center p-4 p-md-5">
+                @if (Model.IsSuccess)
+                {
+                    <div class="rounded-circle bg-success bg-opacity-10 text-success mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 72px; height: 72px;">
+                        <i class="bi bi-shield-fill-check fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold text-success mb-1">Payment Successful!</h3>
+                    <p class="text-muted small mb-4">@Model.Message</p>
+
+                    <!-- Receipt Details Box -->
+                    <div class="card bg-light border-0 p-3 text-start mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">Transaction ID:</span>
+                            <code class="fw-bold text-dark">@Model.TransactionId</code>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">Booking Reference:</span>
+                            <span class="font-monospace fw-bold text-primary">@Model.BookingReference</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">Payment Method:</span>
+                            <span class="badge bg-secondary">@Model.PaymentMethod.ToLabel()</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">Timestamp:</span>
+                            <span>@Model.Timestamp.ToString("g") UTC</span>
+                        </div>
+                        <hr class="my-2" />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong class="text-dark">Amount Paid:</strong>
+                            <strong class="fs-4 text-success">৳@Model.Amount.ToString("F2")</strong>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Booking" asp-action="Pass" asp-route-id="@Model.BookingId" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                            <i class="bi bi-qr-code-scan me-2"></i>View Digital Parking Pass
+                        </a>
+                        <a asp-controller="Booking" asp-action="Details" asp-route-id="@Model.BookingId" class="btn btn-outline-secondary">
+                            View Booking Details
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="rounded-circle bg-danger bg-opacity-10 text-danger mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 72px; height: 72px;">
+                        <i class="bi bi-x-octagon-fill fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold text-danger mb-1">Payment Declined</h3>
+                    <p class="text-muted small mb-4">@Model.Message</p>
+
+                    <div class="card bg-light border-0 p-3 text-start mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">Status:</span>
+                            <span class="badge bg-danger">Simulated Failed (402 Declined)</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="small text-muted">Booking Reference:</span>
+                            <span class="font-monospace">@Model.BookingReference</span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a asp-action="Simulate" asp-route-bookingId="@Model.BookingId" class="btn btn-primary fw-bold">
+                            <i class="bi bi-arrow-repeat me-2"></i>Retry Payment Simulation
+                        </a>
+                        <a asp-controller="Booking" asp-action="Details" asp-route-id="@Model.BookingId" class="btn btn-outline-secondary">
+                            Back to Booking
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

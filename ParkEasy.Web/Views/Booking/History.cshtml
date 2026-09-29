@@ -1,0 +1,155 @@
+@model ParkEasy.Web.Models.ViewModels.BookingHistoryViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "My Booking History";
+}
+
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-journal-text text-primary me-2"></i>My Bookings</h2>
+            <p class="text-muted mb-0">Track all your parking reservations and digital passes</p>
+        </div>
+        <a asp-controller="Parking" asp-action="Index" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold mt-2 mt-md-0">
+            <i class="bi bi-plus-circle me-1"></i>Book New Slot
+        </a>
+    </div>
+
+    <!-- Filter Tabs -->
+    <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 shadow-sm border" id="historyTabs">
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "all" ? "active" : "") fw-semibold" asp-action="History" asp-route-filter="all">
+                All Bookings <span class="badge bg-secondary ms-1">@Model.TotalCount</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "upcoming" ? "active" : "") fw-semibold text-primary" asp-action="History" asp-route-filter="upcoming">
+                Upcoming <span class="badge bg-primary ms-1">@Model.UpcomingCount</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "active" ? "active" : "") fw-semibold text-success" asp-action="History" asp-route-filter="active">
+                Active Now <span class="badge bg-success ms-1">@Model.ActiveCount</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "completed" ? "active" : "") fw-semibold text-secondary" asp-action="History" asp-route-filter="completed">
+                Completed <span class="badge bg-secondary ms-1">@Model.CompletedCount</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Filter == "cancelled" ? "active" : "") fw-semibold text-danger" asp-action="History" asp-route-filter="cancelled">
+                Cancelled <span class="badge bg-danger ms-1">@Model.CancelledCount</span>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Bookings List -->
+    @if (Model.Bookings.Any())
+    {
+        <div class="row g-3">
+            @foreach (var b in Model.Bookings)
+            {
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-3 p-md-4">
+                        <div class="row g-3 align-items-center">
+                            <!-- Left Details -->
+                            <div class="col-lg-5">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="font-monospace fw-bold text-primary">@b.BookingReference</span>
+                                    
+                                    @if (b.Status == BookingStatus.Active)
+                                    {
+                                        <span class="badge bg-success"><i class="bi bi-broadcast me-1"></i>Active</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Confirmed)
+                                    {
+                                        <span class="badge bg-primary">Confirmed</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Requested)
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Completed)
+                                    {
+                                        <span class="badge bg-secondary">Completed</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Cancelled)
+                                    {
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    }
+
+                                    @if (b.PaymentStatus == PaymentStatus.Paid)
+                                    {
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Paid</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Payment Due</span>
+                                    }
+                                </div>
+                                <h5 class="fw-bold mb-1">@b.ParkingName</h5>
+                                <p class="text-muted small mb-0"><i class="bi bi-geo-alt text-danger me-1"></i>@b.ParkingAddress, @b.ParkingCity</p>
+                            </div>
+
+                            <!-- Middle Details -->
+                            <div class="col-md-6 col-lg-4 border-start-md">
+                                <div class="row g-2 small">
+                                    <div class="col-6">
+                                        <span class="text-muted d-block">Slot & Zone:</span>
+                                        <strong>Slot @b.SlotNumber (@b.FloorOrZone)</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted d-block">Vehicle:</span>
+                                        <strong class="font-monospace">@b.VehiclePlateNumber</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted d-block">Start Time:</span>
+                                        <span>@b.StartTime.ToString("MMM dd, hh:mm tt")</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted d-block">Total Cost:</span>
+                                        <strong class="text-primary fs-6">৳@b.TotalAmount.ToString("F2")</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Actions -->
+                            <div class="col-md-6 col-lg-3 text-lg-end">
+                                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                                    <a asp-action="Details" asp-route-id="@b.BookingId" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-info-circle me-1"></i>Details
+                                    </a>
+
+                                    @if (b.PaymentStatus == PaymentStatus.Paid && b.Status != BookingStatus.Cancelled)
+                                    {
+                                        <a asp-action="Pass" asp-route-id="@b.BookingId" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-qr-code me-1"></i>Pass
+                                        </a>
+                                    }
+                                    else if (b.PaymentStatus == PaymentStatus.Pending && b.Status != BookingStatus.Cancelled)
+                                    {
+                                        <a asp-controller="Payment" asp-action="Simulate" asp-route-bookingId="@b.BookingId" class="btn btn-success btn-sm">
+                                            <i class="bi bi-credit-card me-1"></i>Pay Now
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm p-5 text-center bg-white">
+            <i class="bi bi-journal-x text-muted display-4 mb-3"></i>
+            <h4 class="fw-bold">No bookings found in this category</h4>
+            <p class="text-muted small">You don't have any @(Model.Filter != "all" ? Model.Filter : "") reservations yet.</p>
+            <div>
+                <a asp-controller="Parking" asp-action="Index" class="btn btn-primary rounded-pill px-4">Find & Book a Slot</a>
+            </div>
+        </div>
+    }
+</div>

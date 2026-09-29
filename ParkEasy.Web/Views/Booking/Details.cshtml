@@ -1,0 +1,245 @@
+@model ParkEasy.Web.Models.ViewModels.BookingDetailsViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Booking " + Model.BookingReference;
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="History">My Bookings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.BookingReference</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Left: Booking Breakdown -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                    <div>
+                        <span class="text-muted small">Booking Reference</span>
+                        <h3 class="fw-bold font-monospace text-primary mb-0">@Model.BookingReference</h3>
+                    </div>
+                    <div class="mt-2 mt-md-0">
+                        @if (Model.Status == BookingStatus.Active)
+                        {
+                            <span class="badge bg-success fs-6 px-3 py-2"><i class="bi bi-broadcast me-1"></i>Active Now</span>
+                        }
+                        else if (Model.Status == BookingStatus.Confirmed)
+                        {
+                            <span class="badge bg-primary fs-6 px-3 py-2"><i class="bi bi-check2-circle me-1"></i>Confirmed</span>
+                        }
+                        else if (Model.Status == BookingStatus.Requested)
+                        {
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2">Pending Approval</span>
+                        }
+                        else if (Model.Status == BookingStatus.Completed)
+                        {
+                            <span class="badge bg-secondary fs-6 px-3 py-2">Completed</span>
+                        }
+                        else if (Model.Status == BookingStatus.Cancelled)
+                        {
+                            <span class="badge bg-danger fs-6 px-3 py-2">Cancelled</span>
+                        }
+                    </div>
+                </div>
+
+                @if (Model.IsOverstay)
+                {
+                    <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                        <div>
+                            <strong>Overstay Alert:</strong> Your booking scheduled end time (@Model.EndTime.ToString("hh:mm tt")) has passed. Please check out or contact the parking operator.
+                        </div>
+                    </div>
+                }
+
+                <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Parking Information</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <span class="text-muted small d-block">Facility Name:</span>
+                        <strong class="fs-6">@Model.ParkingSpaceName</strong>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted small d-block">Location Address:</span>
+                        <span>@Model.ParkingSpaceAddress, @Model.ParkingSpaceCity</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted small d-block">Assigned Slot:</span>
+                        <span class="badge bg-primary fs-6">Slot @Model.SlotNumber (@Model.FloorOrZone)</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted small d-block">Vehicle Type & Plate:</span>
+                        <strong>@Model.VehicleType</strong> - <span class="font-monospace fw-bold">@Model.VehiclePlateNumber</span>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3"><i class="bi bi-clock-history text-primary me-2"></i>Timing & Pricing</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <span class="text-muted small d-block">Start Time:</span>
+                        <strong>@Model.StartTime.ToString("MMM dd, yyyy - hh:mm tt")</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted small d-block">End Time:</span>
+                        <strong>@Model.EndTime.ToString("MMM dd, yyyy - hh:mm tt")</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted small d-block">Duration:</span>
+                        <strong>@Model.DurationHours Hours</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted small d-block">Hourly Rate:</span>
+                        <span>৳@Model.PricePerHour.ToString("F2") / hr</span>
+                    </div>
+                    <div class="col-md-8">
+                        <span class="text-muted small d-block">Total Amount:</span>
+                        <strong class="fs-4 text-primary">৳@Model.TotalAmount.ToString("F2")</strong>
+                    </div>
+                </div>
+
+                <!-- Payment Details Section -->
+                <h5 class="fw-bold mb-3"><i class="bi bi-credit-card-2-front text-success me-2"></i>Payment Summary</h5>
+                <div class="card bg-light border-0 p-3 mb-4">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <span class="text-muted small d-block">Payment Status:</span>
+                            @if (Model.PaymentStatus == PaymentStatus.Paid)
+                            {
+                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Paid Successfully</span>
+                            }
+                            else if (Model.PaymentStatus == PaymentStatus.Refunded)
+                            {
+                                <span class="badge bg-info text-dark"><i class="bi bi-arrow-counterclockwise me-1"></i>Refunded</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Payment Pending</span>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <span class="text-muted small d-block">Transaction ID:</span>
+                            <span class="font-monospace small">@(Model.TransactionId ?? "N/A (Pending)")</span>
+                        </div>
+                        @if (Model.PaidAt.HasValue)
+                        {
+                            <div class="col-md-6">
+                                <span class="text-muted small d-block">Paid On:</span>
+                                <small>@Model.PaidAt.Value.ToString("g")</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="d-flex flex-wrap gap-2 pt-2 border-top">
+                    @if (Model.PaymentStatus == PaymentStatus.Pending && Model.Status != BookingStatus.Cancelled)
+                    {
+                        <a asp-controller="Payment" asp-action="Simulate" asp-route-bookingId="@Model.Id" class="btn btn-success fw-bold">
+                            <i class="bi bi-credit-card me-1"></i>Pay Now (Simulate)
+                        </a>
+                    }
+
+                    @if (Model.Status != BookingStatus.Cancelled)
+                    {
+                        <a asp-action="Pass" asp-route-id="@Model.Id" class="btn btn-primary fw-bold">
+                            <i class="bi bi-qr-code me-1"></i>Open Digital Pass
+                        </a>
+                    }
+
+                    @if (Model.Status == BookingStatus.Confirmed && Model.PaymentStatus == PaymentStatus.Paid)
+                    {
+                        <form asp-action="CheckIn" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="bookingId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-outline-success">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Simulate Check-In
+                            </button>
+                        </form>
+                    }
+
+                    @if (Model.Status == BookingStatus.Active)
+                    {
+                        <form asp-action="Complete" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="bookingId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-outline-secondary">
+                                <i class="bi bi-check2 me-1"></i>Complete Booking
+                            </button>
+                        </form>
+                    }
+
+                    @if (Model.CanBeCancelled)
+                    {
+                        <button type="button" class="btn btn-outline-danger ms-auto" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                            <i class="bi bi-x-circle me-1"></i>Cancel Booking
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Digital Pass Preview & QR -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm p-4 text-center">
+                <h5 class="fw-bold mb-3"><i class="bi bi-qr-code-scan text-primary me-2"></i>Entry QR Pass</h5>
+
+                @if (!string.IsNullOrEmpty(Model.QrCodeBase64))
+                {
+                    <div class="p-3 bg-light rounded-3 d-inline-block mx-auto mb-3 shadow-sm">
+                        <img src="@Model.QrCodeBase64" class="img-fluid" style="max-width: 200px;" alt="QR Pass" />
+                    </div>
+                    <small class="text-muted d-block mb-3">Scan this digital pass at the barrier gate scanner upon arrival.</small>
+                    <a asp-action="Pass" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm rounded-pill w-100 fw-bold">
+                        <i class="bi bi-fullscreen me-1"></i>Expand Full Pass
+                    </a>
+                }
+                else
+                {
+                    <div class="p-5 bg-light rounded-3 text-muted">
+                        <i class="bi bi-qr-code fs-1 d-block mb-2"></i>
+                        <span>Complete payment to generate QR Pass</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Booking Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="cancelModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Cancel Parking Reservation</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Cancel" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="bookingId" value="@Model.Id" />
+                <div class="modal-body">
+                    <p>Are you sure you want to cancel booking <strong>@Model.BookingReference</strong>?</p>
+                    
+                    @if (Model.PaymentStatus == PaymentStatus.Paid)
+                    {
+                        <div class="alert alert-info py-2 small">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i>A full simulated refund of <strong>৳@Model.TotalAmount.ToString("F2")</strong> will be initiated.
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Reason for Cancellation</label>
+                        <textarea name="reason" rows="3" class="form-control" placeholder="e.g. Change of plans, vehicle maintenance..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Booking</button>
+                    <button type="submit" class="btn btn-danger fw-bold">Confirm Cancellation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

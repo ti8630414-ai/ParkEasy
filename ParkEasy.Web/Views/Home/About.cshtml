@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "About ParkEasy";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">Academic Project Specification</span>
+                <h1 class="fw-bold mt-2">About ParkEasy System</h1>
+                <p class="lead text-muted">Smart Parking Slot Booking System built for university software development demonstration.</p>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h4 class="fw-bold text-primary mb-3"><i class="bi bi-mortarboard-fill me-2"></i>Project Overview</h4>
+                <p class="text-secondary">
+                    <strong>ParkEasy</strong> is an enterprise-grade prototype web application engineered with <strong>ASP.NET Core MVC (.NET 8)</strong>, <strong>PostgreSQL</strong> via Npgsql Entity Framework Core, <strong>ASP.NET Core Identity</strong>, and <strong>SignalR</strong>.
+                </p>
+                <p class="text-secondary">
+                    The platform bridges the gap between drivers seeking secure parking spots and parking garage operators looking to maximize slot occupancy and streamline revenue collection.
+                </p>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 bg-light">
+                            <h6 class="fw-bold text-dark"><i class="bi bi-check-circle-fill text-success me-2"></i>Target Framework</h6>
+                            <span class="text-muted">C# ASP.NET Core MVC on .NET 8 (LTS)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 bg-light">
+                            <h6 class="fw-bold text-dark"><i class="bi bi-database-fill text-primary me-2"></i>Relational Database</h6>
+                            <span class="text-muted">PostgreSQL + Npgsql.EntityFrameworkCore.PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 bg-light">
+                            <h6 class="fw-bold text-dark"><i class="bi bi-shield-lock-fill text-danger me-2"></i>Authentication & RBAC</h6>
+                            <span class="text-muted">ASP.NET Core Identity (Admin, Owner, Driver)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 bg-light">
+                            <h6 class="fw-bold text-dark"><i class="bi bi-broadcast text-info me-2"></i>Real-Time Engine</h6>
+                            <span class="text-muted">SignalR WebSockets for dynamic slot status updates</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4">
+                <h4 class="fw-bold mb-3"><i class="bi bi-cpu-fill text-primary me-2"></i>Core Technical Implementations</h4>
+                <ul class="list-unstyled d-flex flex-column gap-3 text-secondary">
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong>Slot Overlap Prevention & Concurrency Check:</strong>
+                            <p class="small text-muted mb-0">Implements strict interval intersection check <code>(RequestedStart &lt; ExistingEnd &amp;&amp; RequestedEnd &gt; ExistingStart)</code> with transactional locking to prevent double bookings.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong>High-Resolution Base64 QR Code Passes:</strong>
+                            <p class="small text-muted mb-0">Generates instant digital tickets with encrypted vehicle and booking payloads renderable in mobile viewports or printable format.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong>Interactive Dual Map Integration:</strong>
+                            <p class="small text-muted mb-0">Equipped with Leaflet/OpenStreetMap coordinates picker and visualizer out of the box with zero required external fees, alongside Google Maps API compatibility.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong>Academic Payment Simulator:</strong>
+                            <p class="small text-muted mb-0">Simulates real checkout gateways (Credit Card, Mobile Wallets, Net Banking) with 1-click test triggers for instant demonstration.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

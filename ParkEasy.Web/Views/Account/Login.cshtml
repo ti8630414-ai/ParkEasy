@@ -1,0 +1,94 @@
+@model ParkEasy.Web.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card border-0 shadow-sm p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px;">
+                        <i class="bi bi-box-arrow-in-right fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold">Welcome Back</h3>
+                    <p class="text-muted small">Sign in to manage bookings, spaces, or slots</p>
+                </div>
+
+                <!-- 1-Click Demo Logins -->
+                <div class="card bg-light border-0 p-3 mb-4">
+                    <small class="fw-bold text-muted d-block mb-2 text-uppercase" style="font-size: 0.75rem;"><i class="bi bi-lightning-charge-fill text-warning me-1"></i>Quick Demo Login</small>
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="quickFill('admin@parkeasy.com', 'Admin@123456')">Admin</button>
+                        <button type="button" class="btn btn-outline-success btn-sm" onclick="quickFill('owner@parkeasy.com', 'Owner@123456')">Owner</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="quickFill('user@parkeasy.com', 'User@123456')">Driver</button>
+                    </div>
+                </div>
+
+                <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ReturnUrl" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label fw-semibold small"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label fw-semibold small"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" class="form-control" placeholder="••••••••" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label small text-muted"></label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-muted small mb-0">
+                            Don't have an account? <a asp-action="Register" class="text-primary fw-semibold text-decoration-none">Create Account</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function quickFill(email, password) {
+            document.getElementById('Email').value = email;
+            document.getElementById('Password').value = password;
+        }
+
+        // Check query parameters
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const demoEmail = params.get('demoEmail');
+            const demoPass = params.get('demoPass');
+            if (demoEmail && demoPass) {
+                quickFill(demoEmail, demoPass);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,328 @@
+@model ParkEasy.Web.Models.ViewModels.ParkingSpaceDetailsViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = Model.Name + " - Parking Details & Slots";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb & Title -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Parking" asp-action="Index">Parking</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Left Column: Details, Amenities, Map & Slot Grid -->
+        <div class="col-lg-8">
+            <!-- Header Card -->
+            <div class="card border-0 shadow-sm overflow-hidden mb-4">
+                <div class="position-relative" style="height: 260px; background-color: #cbd5e1;">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="w-100 h-100 object-fit-cover" alt="@Model.Name" onerror="this.src='https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1000&q=80'" />
+                    }
+                    else
+                    {
+                        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1000&q=80" class="w-100 h-100 object-fit-cover" alt="Parking Space" />
+                    }
+                    <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-dark bg-opacity-75 text-white">
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="fw-bold mb-1">@Model.Name</h3>
+                                <p class="small mb-0 opacity-90"><i class="bi bi-geo-alt-fill text-danger me-1"></i>@Model.Address, @Model.City, @Model.State @Model.PostalCode</p>
+                            </div>
+                            <div>
+                                <span class="badge bg-primary fs-5 px-3 py-2 fw-bold">৳@Model.BasePricePerHour.ToString("F2")/hr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-2">Description</h5>
+                    <p class="text-secondary mb-4">@Model.Description</p>
+
+                    <h5 class="fw-bold mb-3">Facility Amenities & Features</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasCCTV ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-camera-video-fill fs-5 text-primary me-2"></i>
+                                <span class="small fw-semibold">CCTV 24/7</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasEVCharging ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-lightning-charge-fill fs-5 text-success me-2"></i>
+                                <span class="small fw-semibold">EV Fast Charger</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasCoveredParking ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-umbrella-fill fs-5 text-info me-2"></i>
+                                <span class="small fw-semibold">Covered Garage</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasDisabledAccess ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-person-wheelchair fs-5 text-warning me-2"></i>
+                                <span class="small fw-semibold">Accessible Access</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasSecurityGuard ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-shield-check fs-5 text-success me-2"></i>
+                                <span class="small fw-semibold">On-site Guard</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-2 border rounded d-flex align-items-center @(Model.HasValet ? "bg-light text-dark" : "text-muted opacity-50")">
+                                <i class="bi bi-key-fill fs-5 text-danger me-2"></i>
+                                <span class="small fw-semibold">Valet Parking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Map -->
+                    <h5 class="fw-bold mb-2"><i class="bi bi-map-fill text-primary me-2"></i>Exact Location</h5>
+                    <p class="small text-muted mb-3">Latitude: <code>@Model.Latitude</code>, Longitude: <code>@Model.Longitude</code></p>
+                    <div id="detailsMap" style="height: 250px; border-radius: 12px;" class="mb-4"></div>
+                </div>
+            </div>
+
+            <!-- Visual Parking Slot Layout Card -->
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-0"><i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i>Live Parking Slot Layout</h4>
+                        <small class="text-muted">Click any green slot below to select your spot</small>
+                    </div>
+                    <div class="slot-legend mt-2 mt-md-0">
+                        <div class="legend-item"><div class="legend-box available"></div> Available</div>
+                        <div class="legend-item"><div class="legend-box selected"></div> Selected</div>
+                        <div class="legend-item"><div class="legend-box occupied"></div> Occupied</div>
+                        <div class="legend-item"><div class="legend-box maintenance"></div> Maintenance</div>
+                    </div>
+                </div>
+
+                <!-- Slot Grid Container -->
+                <div class="slot-grid" id="slotGridContainer">
+                    @foreach (var slot in Model.Slots)
+                    {
+                        var statusClass = !slot.IsAvailableForRequestedTime ? "occupied" : (slot.CurrentStatus == SlotStatus.Maintenance ? "maintenance" : "available");
+                        <div class="slot-box @statusClass" 
+                             data-slot-id="@slot.Id" 
+                             data-slot-num="@slot.SlotNumber" 
+                             data-slot-price="@slot.PricePerHour"
+                             data-slot-zone="@slot.FloorOrZone"
+                             data-slot-vehicle="@slot.SupportedVehicleType"
+                             data-available="@(slot.IsAvailableForRequestedTime ? "true" : "false")"
+                             onclick="selectSlot(this)">
+                            <div class="slot-num">@slot.SlotNumber</div>
+                            <div class="slot-type">
+                                @if (slot.HasEVCharger) { <i class="bi bi-lightning-charge-fill text-success" title="EV Charging"></i> }
+                                @slot.SupportedVehicleType
+                            </div>
+                            <div class="slot-price mt-1">৳@slot.PricePerHour.ToString("F2")/hr</div>
+                            <div class="small text-muted" style="font-size: 0.65rem;">@slot.FloorOrZone</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Booking Widget -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 80px; z-index: 10;">
+                <h4 class="fw-bold mb-3"><i class="bi bi-calendar-check text-primary me-2"></i>Reserve Slot</h4>
+
+                <form asp-controller="Booking" asp-action="Create" method="get" id="bookingWidgetForm">
+                    <input type="hidden" name="spaceId" value="@Model.Id" />
+                    <input type="hidden" name="slotId" id="selectedSlotId" value="@(Model.Slots.FirstOrDefault(s => s.IsAvailableForRequestedTime)?.Id ?? 0)" />
+
+                    <!-- Selected Slot Alert Box -->
+                    <div class="alert alert-primary p-3 mb-3 d-flex justify-content-between align-items-center" id="selectedSlotBanner">
+                        <div>
+                            <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.7rem;">Selected Slot</small>
+                            <span class="fs-5 fw-bold text-primary" id="selectedSlotNumberText">
+                                @(Model.Slots.FirstOrDefault(s => s.IsAvailableForRequestedTime)?.SlotNumber ?? "None")
+                            </span>
+                            <span class="badge bg-light text-dark border ms-1" id="selectedSlotZoneText">
+                                @(Model.Slots.FirstOrDefault(s => s.IsAvailableForRequestedTime)?.FloorOrZone ?? "")
+                            </span>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted d-block" style="font-size: 0.7rem;">Rate</small>
+                            <strong class="fs-6" id="selectedSlotRateText">
+                                ৳@((Model.Slots.FirstOrDefault(s => s.IsAvailableForRequestedTime)?.PricePerHour ?? Model.BasePricePerHour).ToString("F2"))/hr
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- Date & Time Pickers -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Booking Date</label>
+                        <input type="date" class="form-control" id="widgetDate" name="date" value="@Model.SelectedDate.ToString("yyyy-MM-dd")" min="@Model.SelectedDate.ToString("yyyy-MM-dd")" onchange="refreshSlotAvailability()" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Start Time</label>
+                        <input type="time" class="form-control" id="widgetTime" name="startTime" value="@Model.SelectedStartTime.ToString(@"hh\:mm")" onchange="refreshSlotAvailability()" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Duration (Hours): <span id="durationDisplay" class="text-primary fw-bold">@Model.DurationHours hr(s)</span></label>
+                        <input type="range" class="form-range" min="1" max="24" step="1" id="widgetDuration" name="durationHours" value="@Model.DurationHours" oninput="updateDuration(this.value)" />
+                    </div>
+
+                    <hr class="my-3" />
+
+                    <!-- Price Calculation Breakdown -->
+                    <div class="bg-light p-3 rounded-3 mb-4">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Base Rate:</span>
+                            <span id="calcRateDisplay">৳@Model.BasePricePerHour.ToString("F2") / hr</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span>Duration:</span>
+                            <span id="calcDurationDisplay">@Model.DurationHours Hours</span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold fs-5 text-dark border-top pt-2">
+                            <span>Total Estimated:</span>
+                            <span class="text-primary" id="calcTotalDisplay">৳@((Model.BasePricePerHour * Model.DurationHours).ToString("F2"))</span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold" id="proceedBtn">
+                            <i class="bi bi-arrow-right-circle-fill me-2"></i>Proceed to Reserve
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Host Contact -->
+                <div class="mt-4 pt-3 border-top">
+                    <small class="text-muted fw-bold d-block mb-1">Space Host</small>
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
+                            @Model.OwnerName.Substring(0, 1).ToUpper()
+                        </div>
+                        <div>
+                            <div class="fw-semibold small">@Model.OwnerName</div>
+                            <small class="text-muted"><i class="bi bi-telephone me-1"></i>@Model.OwnerPhone</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentSlotPrice = @((Model.Slots.FirstOrDefault(s => s.IsAvailableForRequestedTime)?.PricePerHour ?? Model.BasePricePerHour));
+
+        function selectSlot(el) {
+            if (el.dataset.available !== "true") {
+                showToast("Slot Unavailable", "This slot is either occupied during the chosen window or in maintenance.", "warning");
+                return;
+            }
+
+            document.querySelectorAll('.slot-box').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+
+            const slotId = el.dataset.slotId;
+            const slotNum = el.dataset.slotNum;
+            const slotPrice = parseFloat(el.dataset.slotPrice);
+            const slotZone = el.dataset.slotZone;
+
+            document.getElementById('selectedSlotId').value = slotId;
+            document.getElementById('selectedSlotNumberText').innerText = slotNum;
+            document.getElementById('selectedSlotZoneText').innerText = slotZone;
+            document.getElementById('selectedSlotRateText').innerText = '৳' + slotPrice.toFixed(2) + '/hr';
+            document.getElementById('calcRateDisplay').innerText = '৳' + slotPrice.toFixed(2) + ' / hr';
+
+            currentSlotPrice = slotPrice;
+            calculateTotal();
+        }
+
+        function updateDuration(val) {
+            document.getElementById('durationDisplay').innerText = val + ' hr(s)';
+            document.getElementById('calcDurationDisplay').innerText = val + ' Hours';
+            calculateTotal();
+            refreshSlotAvailability();
+        }
+
+        function calculateTotal() {
+            const duration = parseInt(document.getElementById('widgetDuration').value) || 1;
+            const total = currentSlotPrice * duration;
+            document.getElementById('calcTotalDisplay').innerText = '৳' + total.toFixed(2);
+        }
+
+        async function refreshSlotAvailability() {
+            const spaceId = @Model.Id;
+            const date = document.getElementById('widgetDate').value;
+            const time = document.getElementById('widgetTime').value;
+            const duration = document.getElementById('widgetDuration').value;
+
+            try {
+                const url = `/Parking/GetSlotAvailability?spaceId=${spaceId}&date=${date}&startTime=${time}&durationHours=${duration}`;
+                const res = await fetch(url);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.slots) {
+                        renderSlots(data.slots);
+                    }
+                }
+            } catch (err) {
+                console.log("Slot availability check error:", err);
+            }
+        }
+
+        function renderSlots(slots) {
+            const currentSelected = document.getElementById('selectedSlotId').value;
+            slots.forEach(s => {
+                const el = document.querySelector(`[data-slot-id="${s.id}"]`);
+                if (el) {
+                    el.classList.remove('available', 'occupied', 'maintenance');
+                    const isAvail = s.isAvailableForRequestedTime;
+                    el.dataset.available = isAvail ? "true" : "false";
+                    if (!isAvail) {
+                        el.classList.add('occupied');
+                    } else if (s.currentStatus === 4) {
+                        el.classList.add('maintenance');
+                    } else {
+                        el.classList.add('available');
+                    }
+
+                    if (s.id == currentSelected && isAvail) {
+                        el.classList.add('selected');
+                    }
+                }
+            });
+        }
+
+        // Initialize Leaflet Map
+        document.addEventListener('DOMContentLoaded', () => {
+            const lat = @Model.Latitude;
+            const lng = @Model.Longitude;
+
+            const map = L.map('detailsMap').setView([lat, lng], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup("<strong>@Model.Name</strong><br/>@Model.Address")
+                .openPopup();
+
+            // Select first available slot initially
+            const firstAvail = document.querySelector('.slot-box.available');
+            if (firstAvail) {
+                firstAvail.classList.add('selected');
+            }
+        });
+    </script>
+}

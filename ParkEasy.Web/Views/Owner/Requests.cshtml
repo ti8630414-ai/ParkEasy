@@ -1,0 +1,132 @@
+@model List<ParkEasy.Web.Models.ViewModels.BookingSummaryViewModel>
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Booking Requests";
+}
+
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check-fill text-primary me-2"></i>Booking Requests & Reservations</h2>
+            <p class="text-muted mb-0">Review, approve, or reject reservation requests across your spaces</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Booking Ref</th>
+                        <th>Parking Space</th>
+                        <th>Slot</th>
+                        <th>Vehicle Plate</th>
+                        <th>Scheduled Time</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var b in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-controller="Booking" asp-action="Details" asp-route-id="@b.BookingId" class="font-monospace fw-bold text-decoration-none">
+                                        @b.BookingReference
+                                    </a>
+                                </td>
+                                <td><strong>@b.ParkingName</strong></td>
+                                <td><span class="badge bg-primary">Slot @b.SlotNumber</span></td>
+                                <td><span class="font-monospace fw-bold">@b.VehiclePlateNumber</span></td>
+                                <td>
+                                    <div>@b.StartTime.ToString("MMM dd, HH:mm")</div>
+                                    <small class="text-muted">@b.DurationHours hrs</small>
+                                </td>
+                                <td class="fw-bold text-success">৳@b.TotalAmount.ToString("F2")</td>
+                                <td>
+                                    @if (b.Status == BookingStatus.Requested)
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Confirmed)
+                                    {
+                                        <span class="badge bg-primary">Confirmed</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Active)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Completed)
+                                    {
+                                        <span class="badge bg-secondary">Completed</span>
+                                    }
+                                    else if (b.Status == BookingStatus.Cancelled || b.Status == BookingStatus.Rejected)
+                                    {
+                                        <span class="badge bg-danger">@b.Status</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-flex gap-1 justify-content-end">
+                                        @if (b.Status == BookingStatus.Requested)
+                                        {
+                                            <form asp-action="ApproveBooking" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="bookingId" value="@b.BookingId" />
+                                                <button type="submit" class="btn btn-sm btn-success fw-bold" title="Approve">
+                                                    <i class="bi bi-check-lg me-1"></i>Approve
+                                                </button>
+                                            </form>
+
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal-@b.BookingId" title="Reject">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+
+                                            <!-- Reject Modal -->
+                                            <div class="modal fade text-start" id="rejectModal-@b.BookingId" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-danger text-white">
+                                                            <h5 class="modal-title">Reject Booking @b.BookingReference</h5>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form asp-action="RejectBooking" method="post">
+                                                            @Html.AntiForgeryToken()
+                                                            <input type="hidden" name="bookingId" value="@b.BookingId" />
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label small fw-bold">Reason for Rejection</label>
+                                                                    <textarea name="reason" class="form-control" rows="3" placeholder="e.g. Facility under maintenance, slot reserved for event..." required></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-danger fw-bold">Confirm Rejection</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <a asp-controller="Booking" asp-action="Details" asp-route-id="@b.BookingId" class="btn btn-sm btn-outline-primary" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">No booking records found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

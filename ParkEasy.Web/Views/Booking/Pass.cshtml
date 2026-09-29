@@ -1,0 +1,117 @@
+@model ParkEasy.Web.Models.ViewModels.DigitalPassViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Digital Parking Pass - " + Model.BookingReference;
+}
+
+<div class="container py-5">
+    <div class="digital-pass-card mb-4">
+        <!-- Pass Header -->
+        <div class="digital-pass-header">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-p-square-fill fs-3 me-2"></i>
+                    <span class="fw-bold fs-5">ParkEasy</span>
+                </div>
+                <span class="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold">DIGITAL PASS</span>
+            </div>
+            <h4 class="fw-bold mb-0">@Model.ParkingName</h4>
+            <small class="opacity-75">@Model.ParkingAddress, @Model.ParkingCity</small>
+        </div>
+
+        <!-- Pass Body -->
+        <div class="p-4 position-relative">
+            <div class="pass-notch-left"></div>
+            <div class="pass-notch-right"></div>
+
+            <!-- QR Code Section -->
+            <div class="text-center mb-4">
+                @if (!string.IsNullOrEmpty(Model.QrCodeBase64))
+                {
+                    <div class="p-2 border rounded-3 d-inline-block bg-white shadow-sm">
+                        <img src="@Model.QrCodeBase64" alt="QR Pass" style="width: 200px; height: 200px;" />
+                    </div>
+                }
+                <div class="mt-2">
+                    <span class="font-monospace fw-bold text-dark fs-5">@Model.BookingReference</span>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Scan this barcode/QR at entrance gate scanner</small>
+                </div>
+            </div>
+
+            <!-- Slot & Vehicle Badge Box -->
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-6">
+                    <div class="p-3 bg-primary bg-opacity-10 rounded-3 border border-primary border-opacity-25">
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Assigned Slot</small>
+                        <h4 class="fw-bold text-primary mb-0">@Model.SlotNumber</h4>
+                        <small class="text-dark fw-semibold">@Model.FloorOrZone</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 bg-light rounded-3 border">
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Vehicle Plate</small>
+                        <h4 class="fw-bold text-dark font-monospace mb-0">@Model.VehiclePlateNumber</h4>
+                        <small class="text-muted">@Model.VehicleType</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Times & Details -->
+            <div class="card bg-light border-0 p-3 mb-3 small">
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Driver Name:</span>
+                    <strong>@Model.UserName</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Valid From:</span>
+                    <strong>@Model.StartTime.ToString("MMM dd, yyyy - hh:mm tt")</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Valid Until:</span>
+                    <strong>@Model.EndTime.ToString("MMM dd, yyyy - hh:mm tt")</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Duration:</span>
+                    <span>@Model.DurationHours Hours</span>
+                </div>
+                <hr class="my-2" />
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Payment:</span>
+                    @if (Model.PaymentStatus == PaymentStatus.Paid)
+                    {
+                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>PAID (৳@Model.TotalAmount.ToString("F2"))</span>
+                    }
+                    else if (Model.PaymentStatus == PaymentStatus.Refunded)
+                    {
+                        <span class="badge bg-info text-dark"><i class="bi bi-arrow-counterclockwise me-1"></i>REFUNDED</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i>PENDING (৳@Model.TotalAmount.ToString("F2"))</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.TransactionId))
+                {
+                    <div class="d-flex justify-content-between align-items-center mt-1">
+                        <span class="text-muted">Txn ID:</span>
+                        <code class="small">@Model.TransactionId</code>
+                    </div>
+                }
+            </div>
+
+            <div class="text-center text-muted" style="font-size: 0.7rem;">
+                Issued on @Model.IssuedAt.ToString("g") UTC &bull; Verified by ParkEasy Digital Pass Engine
+            </div>
+        </div>
+    </div>
+
+    <!-- Print & Return Controls -->
+    <div class="text-center no-print">
+        <button type="button" class="btn btn-primary px-4 fw-bold me-2" onclick="window.print()">
+            <i class="bi bi-printer-fill me-1"></i>Print Ticket / Save PDF
+        </button>
+        <a asp-action="History" class="btn btn-outline-secondary">
+            Back to Bookings
+        </a>
+    </div>
+</div>

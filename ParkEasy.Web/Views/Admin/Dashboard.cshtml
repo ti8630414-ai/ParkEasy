@@ -1,0 +1,152 @@
+@model ParkEasy.Web.Models.ViewModels.AdminDashboardViewModel
+@using ParkEasy.Web.Models.Enums
+@{
+    ViewData["Title"] = "Administrator Control Center";
+}
+
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-shield-lock-fill text-danger me-2"></i>System Administration</h2>
+            <p class="text-muted mb-0">Full platform oversight, user management, and system monitoring</p>
+        </div>
+        <div class="d-flex gap-2 mt-3 mt-md-0">
+            <a asp-action="Users" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold">
+                <i class="bi bi-people me-1"></i>Manage Users
+            </a>
+            <a asp-action="SystemHealth" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                <i class="bi bi-heart-pulse me-1"></i>System Diagnostics
+            </a>
+        </div>
+    </div>
+
+    <!-- Admin KPI Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card success border-0 p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted fw-semibold">Platform Revenue</small>
+                        <h3 class="fw-bold text-success mb-0">৳@Model.TotalSystemRevenue.ToString("F2")</h3>
+                    </div>
+                    <div class="stat-icon bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">Refunded: <strong>৳@Model.TotalRefundedAmount.ToString("F2")</strong></small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card info border-0 p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted fw-semibold">Registered Users</small>
+                        <h3 class="fw-bold text-info mb-0">@Model.TotalUsers</h3>
+                    </div>
+                    <div class="stat-icon bg-info bg-opacity-10 text-info">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">Drivers & Owners</small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card border-0 p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted fw-semibold">Parking Spaces</small>
+                        <h3 class="fw-bold text-primary mb-0">@Model.TotalParkingSpaces</h3>
+                    </div>
+                    <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-p-square-fill"></i>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">Total Slots: <strong>@Model.TotalSlots</strong></small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card warning border-0 p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted fw-semibold">Total Bookings</small>
+                        <h3 class="fw-bold text-warning mb-0">@Model.TotalBookings</h3>
+                    </div>
+                    <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-journal-check"></i>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">Active Now: <strong>@Model.TotalActiveBookings</strong></small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tables Row -->
+    <div class="row g-4 mb-4">
+        <!-- Recent Registered Users -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Recent Users</h5>
+                    <a asp-action="Users" class="small text-primary fw-semibold">View All &rarr;</a>
+                </div>
+                <div class="list-group list-group-flush">
+                    @foreach (var u in Model.RecentUsers)
+                    {
+                        <div class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark">@u.FullName</div>
+                                <small class="text-muted">@u.Email</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge @(u.Role == UserRoles.Admin ? "bg-danger" : (u.Role == UserRoles.Owner ? "bg-success" : "bg-primary"))">
+                                    @u.Role
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Recent Bookings -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">System Bookings</h5>
+                    <a asp-action="Bookings" class="small text-primary fw-semibold">View All &rarr;</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle small mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ref</th>
+                                <th>Facility</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var b in Model.RecentBookings)
+                            {
+                                <tr>
+                                    <td><a asp-controller="Booking" asp-action="Details" asp-route-id="@b.BookingId" class="font-monospace fw-bold text-decoration-none">@b.BookingReference</a></td>
+                                    <td>@b.ParkingName</td>
+                                    <td class="fw-bold text-success">৳@b.TotalAmount.ToString("F2")</td>
+                                    <td>
+                                        @if (b.Status == BookingStatus.Active) { <span class="badge bg-success">Active</span> }
+                                        else if (b.Status == BookingStatus.Confirmed) { <span class="badge bg-primary">Confirmed</span> }
+                                        else if (b.Status == BookingStatus.Requested) { <span class="badge bg-warning text-dark">Pending</span> }
+                                        else { <span class="badge bg-secondary">@b.Status</span> }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
