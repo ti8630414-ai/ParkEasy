@@ -1,0 +1,272 @@
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Npgsql.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check2\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check3\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-fresh\ParkEasy.Web.pdb
+E:\ParkEasy.Web\bin\Debug\net8.0\appsettings.Development.json
+E:\ParkEasy.Web\bin\Debug\net8.0\appsettings.json
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.staticwebassets.runtime.json
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.staticwebassets.endpoints.json
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.exe
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.deps.json
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.runtimeconfig.json
+E:\ParkEasy.Web\bin\Debug\net8.0\Humanizer.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\Mono.TextTemplating.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\QRCoder.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.CodeDom.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.Composition.Convention.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.Composition.Hosting.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.Composition.Runtime.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\System.Composition.TypedParts.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.csproj.AssemblyReference.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.GeneratedMSBuildEditorConfig.editorconfig
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.AssemblyInfoInputs.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.AssemblyInfo.cs
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.csproj.CoreCompileInputs.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.MvcApplicationPartsAssemblyInfo.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.RazorAssemblyInfo.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.RazorAssemblyInfo.cs
+E:\ParkEasy.Web\obj\Debug\net8.0\rjimswa.dswa.cache.json
+E:\ParkEasy.Web\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+E:\ParkEasy.Web\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+E:\ParkEasy.Web\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\ParkEasy.Web\obj\Debug\net8.0\scopedcss\bundle\ParkEasy.Web.styles.css
+E:\ParkEasy.Web\obj\Debug\net8.0\scopedcss\projectbundle\ParkEasy.Web.bundle.scp.css
+E:\ParkEasy.Web\obj\Debug\net8.0\staticwebassets.build.json
+E:\ParkEasy.Web\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\staticwebassets.development.json
+E:\ParkEasy.Web\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\ParkEasy.Web\obj\Debug\net8.0\swae.build.ex.cache
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.2D866042.Up2Date
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.dll
+E:\ParkEasy.Web\obj\Debug\net8.0\refint\ParkEasy.Web.dll
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.pdb
+E:\ParkEasy.Web\obj\Debug\net8.0\ParkEasy.Web.genruntimeconfig.cache
+E:\ParkEasy.Web\bin\Debug\net8.0\ParkEasy.Web.pdb
+E:\ParkEasy.Web\obj\Debug\net8.0\ref\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check4\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check5\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check6\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check7\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check8\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check9\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check10\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check11\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check12\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check13\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check14\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check15\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check16\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check17\ParkEasy.Web.pdb
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\appsettings.Development.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\appsettings.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.staticwebassets.runtime.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.staticwebassets.endpoints.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.deps.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.runtimeconfig.json
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.dll
+C:\Users\Digital Outlet\AppData\Local\Temp\opencode\parkeasy-build-check18\ParkEasy.Web.pdb
+E:\ParkEasy.Web\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
